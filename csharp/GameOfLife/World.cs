@@ -6,8 +6,45 @@ using System.Threading.Tasks;
 
 namespace GameOfLife
 {
-    class World : IGameOfLife
+    public class World : IGameOfLife
     {
+
+        int[,] contents = new int[50, 50];//Where's my origin?
+        // ^ 2-D array of zeros!! :D
+
+
+        public World(int[,] live_cells)//cell_holder are live cells in 50x50 grid world
+        {
+            for(int i = 0; i < (live_cells.Length)/2; i++)
+            {
+                //i represents a live cell (position)
+                int live_cell_x_coord = live_cells[i, 0];
+                int live_cell_y_coord = live_cells[i, 1];
+
+                //It's Alive!!!
+                contents[live_cell_x_coord, live_cell_y_coord] = 1; 
+                
+            }
+        }
+
+        
+
+        public int CountLiveNeighbors(int x, int y)
+        {
+            int top, bottom, left, right, top_left, top_right;
+            int bottom_left, bottom_right;
+
+            top = contents[x, y + 1];
+            bottom = contents[x, y - 1];
+            left = contents[x-1, y];
+            right = contents[x+1, y];
+            bottom_left = contents[x-1, y-1];
+            top_left = contents[x-1, y+1];
+            bottom_right = contents[x+1 , y-1];
+            top_right = contents[x+1, y+1];
+
+            return top + bottom + bottom_left + bottom_right + left + right + top_left + top_right;
+        }
         public void LiveOn(object input)
         {
             throw new NotImplementedException();
