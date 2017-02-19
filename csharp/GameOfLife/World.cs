@@ -53,7 +53,14 @@ namespace GameOfLife
         private void KillCells()
         {
             //look inside of about_to_die and set position to 0 
-            throw new NotImplementedException();
+            //(x,y)
+            foreach (string cell in about_to_die)
+            {
+                Match coord = Regex.Match(cell, @"((?<x>\d+),(?<y>\d+))");
+                int x = int.Parse(coord.Groups['x'].Value);
+                int y = int.Parse(coord.Groups['y'].Value);
+                contents[x, y] = 0;
+            }
         }
 
         public void Tick() //represents passsage of time
