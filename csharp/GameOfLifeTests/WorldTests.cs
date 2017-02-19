@@ -20,7 +20,7 @@ namespace GameOfLifeTests
         }
 
         [TestMethod]
-        public void EnsureReproductionWithStrillLife()
+        public void EnsureReproductionWithStillLife()
         {
 
         }
