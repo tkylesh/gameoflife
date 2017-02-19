@@ -5,11 +5,18 @@ using GameOfLife;
 namespace GameOfLifeTests
 {
     [TestClass]
-    public class GameOfLifeTests
+    public class WorldTests
     {
         [TestMethod]
         public void EnsureICanCreateTheWorld()
         {
+            //view port/ size of world
+            int[,] cell_holder = { { 2, 10 }, { 50,50 } };
+
+            World world = new World(cell_holder);
+
+            Assert.IsNotNull(world);
+
         }
 
         [TestMethod]

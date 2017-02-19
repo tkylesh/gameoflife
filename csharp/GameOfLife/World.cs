@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GameOfLife
@@ -12,6 +13,13 @@ namespace GameOfLife
         int[,] contents = new int[50, 50];//Where's my origin?
         // ^ 2-D array of zeros!! :D
 
+        List<string> about_to_live = new List<string>();
+        List<string> about_to_die = new List<string>();
+
+        public World()
+        {
+
+        }
 
         public World(int[,] live_cells)//cell_holder are live cells in 50x50 grid world
         {
@@ -27,7 +35,45 @@ namespace GameOfLife
             }
         }
 
-        
+        private void BirthCells()
+        {
+            //look inside of about_to_live 
+            foreach(string cell in about_to_live)
+            {
+                //(x,y)
+                Match coord = Regex.Match(cell, @"((?<x>\d+),(?<y>\d+))");
+                //and set position to 1 
+                int x = int.Parse(coord.Groups['x'].Value);
+                int y = int.Parse(coord.Groups['y'].Value);
+                //add them to the contents
+                contents[x, y] = 1;
+            }
+        }
+
+        private void KillCells()
+        {
+            //look inside of about_to_die and set position to 0 
+            throw new NotImplementedException();
+        }
+
+        public void Tick() //represents passsage of time
+        {
+            LiveOn(null);
+            Reproduction(null);
+            UnderPopulation(null);
+            OverPopulation(null);
+
+            KillCells(); //cells will be removed from defined grid
+            BirthCells(); //cells will be brought into existence on defined grid
+        }
+
+        // 1.Needs to be a method to retrieve dead neighbors
+        // 2.now count the live neighbors relative to the dead neighbors positions
+
+       public List<object> GetDeadNeighbors(int x, int y)
+        {
+            throw new NotImplementedException();
+        }
 
         public int CountLiveNeighbors(int x, int y)
         {
@@ -57,12 +103,33 @@ namespace GameOfLife
 
         public void Reproduction(object input)
         {
+            //Iterate to find live cells and find their dead neighbors.
+            //GetDeadNeighbors
+            //Iterate through all collected dead neighbors and call CountLiveNeighbors
+            //Stash the dead cells that have more than 3 live neighbors then add it to the
+            //about_to_live list
             throw new NotImplementedException();
         }
 
         public void UnderPopulation(object input)
         {
-            throw new NotImplementedException();
+            for (int y = 0; y < 50; y++)
+            {
+                for (int x = 0; x < 50; x++)
+                {
+                    if(contents[y,x] == 1)
+                    {
+                        //cell is alive
+                        int neighbors = CountLiveNeighbors(x, y);
+                        if(neighbors < 2)
+                        {
+                            about_to_die.Add($"({x},{y})");
+                        }
+
+                    }
+
+                }
+            }
         }
     }
 }
