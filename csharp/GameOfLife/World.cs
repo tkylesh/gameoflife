@@ -9,6 +9,11 @@ namespace GameOfLife
 {
     public class World : IGameOfLife
     {
+        //Conway's Game of Life The Rules
+        //    1.  Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+        //    2.  Any live cell with two or three live neighbours lives on to the next generation.
+        //    3.  Any live cell with more than three live neighbours dies, as if by overcrowding.
+        //    4.  Any dead cell with exactly three live neighbours becomes alive cell, as if by reproduction.
 
         int[,] contents = new int[50, 50];//Where's my origin?
         // ^ 2-D array of zeros!! :D
@@ -77,11 +82,38 @@ namespace GameOfLife
         // 1.Needs to be a method to retrieve dead neighbors
         // 2.now count the live neighbors relative to the dead neighbors positions
 
-       public List<object> GetDeadNeighbors(int x, int y)
+       public List<int> GetDeadNeighbors(int x, int y)
         {
-            throw new NotImplementedException();
+            //get all neighbors like in countliveneighbors method
+            int top, bottom, left, right, top_left, top_right;
+            int bottom_left, bottom_right;
+
+            top = contents[x, y + 1];
+            bottom = contents[x, y - 1];
+            left = contents[x - 1, y];
+            right = contents[x + 1, y];
+            bottom_left = contents[x - 1, y - 1];
+            top_left = contents[x - 1, y + 1];
+            bottom_right = contents[x + 1, y - 1];
+            top_right = contents[x + 1, y + 1];
+
+            //if neighboring cell == 0
+            List<int> temp = new List<int> { top, bottom, left, right, bottom_left, bottom_right, top_left, top_right };
+
+            List<int> returnList = new List<int> { };
+            // add to list
+            foreach(var item in temp)
+            {
+                if(item == 0)
+                {
+                    returnList.Add(item);
+                }
+            }
+            //return list
+            return returnList;
         }
 
+        //pass an x and y value to check all neighboring cells for live cell
         public int CountLiveNeighbors(int x, int y)
         {
             int top, bottom, left, right, top_left, top_right;
@@ -108,14 +140,25 @@ namespace GameOfLife
             throw new NotImplementedException();
         }
 
+        //    4.  Any dead cell with exactly three live neighbours becomes alive cell, as if by reproduction.
         public void Reproduction(object input)
         {
             //Iterate to find live cells and find their dead neighbors.
-            //GetDeadNeighbors
-            //Iterate through all collected dead neighbors and call CountLiveNeighbors
-            //Stash the dead cells that have more than 3 live neighbors then add it to the
-            //about_to_live list
-            throw new NotImplementedException();
+            for(var x=0; x<contents.Length; x++)
+            {
+                for(var y=0; y<contents.Length; y++)
+                {
+                    //GetDeadNeighbors
+                    if(contents[x,y]==0)
+                    {
+                        //Iterate through all collected dead neighbors and call CountLiveNeighbors
+                        //Stash the dead cells that have more than 3 live neighbors then add it to the
+                        //about_to_live list
+                    }
+                }
+            }
+            
+           
         }
 
         public void UnderPopulation(object input)
