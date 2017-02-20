@@ -130,14 +130,33 @@ namespace GameOfLife
 
             return top + bottom + bottom_left + bottom_right + left + right + top_left + top_right;
         }
+
+        //    2.  Any live cell with two or three live neighbours lives on to the next generation.
         public void LiveOn(object input)
         {
             throw new NotImplementedException();
         }
 
+        //    3.  Any live cell with more than three live neighbours dies, as if by overcrowding.
         public void OverPopulation(object input)
         {
-            throw new NotImplementedException();
+            for (int y = 0; y < 50; y++)
+            {
+                for (int x = 0; x < 50; x++)
+                {
+                    if (contents[y, x] == 1)
+                    {
+                        //cell is alive
+                        int neighbors = CountLiveNeighbors(x, y);
+                        if (neighbors > 3)
+                        {
+                            about_to_die.Add($"({x},{y})");
+                        }
+
+                    }
+
+                }
+            }
         }
 
         //    4.  Any dead cell with exactly three live neighbours becomes alive cell, as if by reproduction.
@@ -154,13 +173,17 @@ namespace GameOfLife
                         //Iterate through all collected dead neighbors and call CountLiveNeighbors
                         //Stash the dead cells that have more than 3 live neighbors then add it to the
                         //about_to_live list
+                        int neighbors = CountLiveNeighbors(x, y);
+                        if(neighbors == 3)
+                        {
+                            about_to_live.Add($"({x},{y})");
+                        }
                     }
                 }
             }
-            
-           
         }
 
+        //    1.  Any live cell with fewer than two live neighbours dies, as if caused by under-population.
         public void UnderPopulation(object input)
         {
             for (int y = 0; y < 50; y++)
