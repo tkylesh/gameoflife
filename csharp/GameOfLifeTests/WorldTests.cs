@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GameOfLife;
+using System.Collections.Generic;
 
 namespace GameOfLifeTests
 {
@@ -22,7 +23,16 @@ namespace GameOfLifeTests
         [TestMethod]
         public void EnsureReproductionWithStillLife()
         {
+            int[,] cell_holder = { { 2, 10 }, { 2, 11 }, { 2, 12 } };
+            World world = new World(cell_holder);
 
+            world.Reproduction(world);
+
+            var actual = world.about_to_live;
+            var expected = new List<string>() {"(1,11)","(3,11)" };
+            Console.WriteLine(actual);
+
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [TestMethod]

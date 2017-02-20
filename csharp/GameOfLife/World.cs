@@ -18,8 +18,8 @@ namespace GameOfLife
         int[,] contents = new int[50, 50];//Where's my origin?
         // ^ 2-D array of zeros!! :D
 
-        List<string> about_to_live = new List<string>();
-        List<string> about_to_die = new List<string>();
+        public List<string> about_to_live = new List<string>();
+        public List<string> about_to_die = new List<string>();
 
         public World()
         {
@@ -140,9 +140,9 @@ namespace GameOfLife
         //    3.  Any live cell with more than three live neighbours dies, as if by overcrowding.
         public void OverPopulation(object input)
         {
-            for (int y = 0; y < 50; y++)
+            for (int y = 1; y < 49; y++)
             {
-                for (int x = 0; x < 50; x++)
+                for (int x = 1; x < 49; x++)
                 {
                     if (contents[y, x] == 1)
                     {
@@ -163,9 +163,9 @@ namespace GameOfLife
         public void Reproduction(object input)
         {
             //Iterate to find live cells and find their dead neighbors.
-            for(var x=0; x<contents.Length; x++)
+            for(var x=1; x<49; x++)
             {
-                for(var y=0; y<contents.Length; y++)
+                for(var y=1; y<49; y++)
                 {
                     //GetDeadNeighbors
                     if(contents[x,y]==0)
@@ -186,9 +186,9 @@ namespace GameOfLife
         //    1.  Any live cell with fewer than two live neighbours dies, as if caused by under-population.
         public void UnderPopulation(object input)
         {
-            for (int y = 0; y < 50; y++)
+            for (int y = 1; y < 49; y++)
             {
-                for (int x = 0; x < 50; x++)
+                for (int x = 1; x < 49; x++)
                 {
                     if(contents[y,x] == 1)
                     {
